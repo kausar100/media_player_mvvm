@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                     child: TextField(
-                        autofocus: true,
+                        // autofocus: true,
                         style: const TextStyle(
                           fontSize: 15.0,
                           color: Colors.grey,
@@ -47,10 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         onChanged: (value) {},
                         onSubmitted: (value) {
                           if (value.isNotEmpty) {
-                            Provider.of<MediaViewModel>(context, listen: false)
-                                .setSelectedMedia(null);
-
-                            Provider.of<MediaViewModel>(context, listen: false)
+                            context
+                                .read<MediaViewModel>()
                                 .fetchMediaData(value);
                           }
                         },
@@ -90,28 +88,21 @@ class _HomeScreenState extends State<HomeScreen> {
             mediaList != null && mediaList.isNotEmpty
                 ? Expanded(
                     flex: 8,
-                    child: PlayerListWidget(mediaList, (Media media) {
-                      Provider.of<MediaViewModel>(context, listen: false)
-                          .setSelectedMedia(media);
-                    }),
+                    child: PlayerListWidget(mediaList),
                   )
                 : const Expanded(
                     child: Center(
                       child: Text('Search the song by Artist'),
                     ),
                   ),
-                  if (Provider.of<MediaViewModel>(context).media != null)
-            Expanded(
-              flex: 2,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: PlayerWidget(
-                  function: () {
-                    setState(() {});
-                  },
+            if (context.watch<MediaViewModel>().media != null)
+              const Expanded(
+                flex: 2,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: PlayerWidget(),
                 ),
               ),
-            ),
           ],
         );
       case Status.ERROR:

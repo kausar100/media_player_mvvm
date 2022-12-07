@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mvvm_flutter/model/model.dart';
 import 'package:mvvm_flutter/view_model/media_view_model.dart';
 import 'package:provider/provider.dart';
@@ -10,9 +9,8 @@ import 'package:provider/provider.dart';
 enum PlayerState { stopped, playing, paused }
 
 class PlayerWidget extends StatefulWidget {
-  final Function function;
+  const PlayerWidget({super.key});
 
-  PlayerWidget({required this.function});
 
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();
@@ -93,11 +91,11 @@ class _PlayerWidgetState extends State<PlayerWidget> {
               child: IconButton(
                 onPressed: () {
                   if (_isPlaying) {
-                    widget.function();
+                    setState(() {});
                     _pause();
                   } else {
                     if (media != null) {
-                      widget.function();
+                      setState(() {});
                       _play(media);
                     }
                   }

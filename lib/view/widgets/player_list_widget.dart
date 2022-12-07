@@ -7,9 +7,8 @@ import 'package:provider/provider.dart';
 
 class PlayerListWidget extends StatefulWidget {
   final List<Media> _mediaList;
-  final Function _function;
 
-  PlayerListWidget(this._mediaList, this._function);
+  PlayerListWidget(this._mediaList);
 
   @override
   State<PlayerListWidget> createState() => _PlayerListWidgetState();
@@ -30,7 +29,7 @@ class _PlayerListWidgetState extends State<PlayerListWidget> {
           return InkWell(
             onTap: () {
               if (data.artistName != null) {
-                widget._function(data);
+                context.read<MediaViewModel>().setSelectedMedia(data);
               }
             },
             child: _buildSongItem(data),
@@ -48,7 +47,7 @@ class _PlayerListWidgetState extends State<PlayerListWidget> {
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(25.0),
             child: SizedBox(
               width: 50,
               height: 50,
