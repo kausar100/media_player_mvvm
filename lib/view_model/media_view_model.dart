@@ -12,12 +12,12 @@ class MediaViewModel with ChangeNotifier {
 
   Media? get media => _media;
 
-  Future<void> fetchMediaData(String url) async {
+  Future<void> fetchMediaData(String value) async {
     _apiResponse = ApiResponse.loading('Fetching artist data...');
     notifyListeners();
 
     try {
-      List<Media> mediaList = await MediaRepository().fetchMediaList(url);
+      List<Media> mediaList = await MediaRepository().fetchMediaList(value);
       _apiResponse = ApiResponse.completed(mediaList);
     } catch (e) {
       _apiResponse = ApiResponse.error(e.toString());
